@@ -4,12 +4,8 @@ import com.email.writer.model.EmailRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,43 +23,12 @@ public class EmailGeneratorService {
         this.webClient = webClientBuilder.build();
     }
 
-//    public String generateEmailReply( EmailRequest emailRequest) {
-//        //build the prompt
-//        String prompt = buildPrompt(emailRequest);
-//        // craft a request
-//        Map<String,Object> requestBody = Map.of(
-//                "content",new Object[]{
-//                    Map.of("parts", new Object[]{
-//                            Map.of("text", prompt)
-//                    })
-//                }
-//
-//                );
-//        // Do request and get response
-//        String response = webClient.post()
-//                .uri(geminiApiUrl + geminiApiKey)
-//                .header("Content-Type", "application/json")
-//                .bodyValue(requestBody)
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .block();
-//
-//        // extract response and return response
-//        return extratResponseContent(response);
-//    }
 
     public String generateEmailReply(EmailRequest emailRequest) {
         try {
             String prompt = buildPrompt(emailRequest);
             System.out.println("Prompt: " + prompt); // debug log
 
-//            Map<String, Object> requestBody = Map.of(
-//                    "content", new Object[]{
-//                            Map.of("parts", new Object[]{
-//                                    Map.of("text", prompt)
-//                            })
-//                    }
-//            );
             Map<String, Object> requestBody = Map.of(
                     "contents", List.of(
                             Map.of(
